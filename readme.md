@@ -6,11 +6,9 @@ This project is a Go-based web API that follows a specific structure. It consist
 
 The project structure is organized as follows:
 
-- `cmd/`: Contains the main application code and configuration files.
-
-  - `go.mod`: Go module file for the main application.
-  - `go.sum`: Go module checksum file.
-  - `main.go`: Entry point of your web API.
+- `go.mod`: Go module file for the main application.
+- `go.sum`: Go module checksum file.
+- `main.go`: Entry point of your web API.
 
 - `pkg/`: Contains various packages for different parts of your application.
 

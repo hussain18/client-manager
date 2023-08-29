@@ -16,3 +16,6 @@ func main() {
 func rootRoute(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "API WORKS!"})
 }
+
+// tKE8MMsdRwDRAS9U
+// mongodb+srv://thussainnt:tKE8MMsdRwDRAS9U@cluster0.abiarlh.mongodb.net/?retryWrites=true&w=majority

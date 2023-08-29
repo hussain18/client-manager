@@ -1,4 +1,4 @@
-module client-manager/cmd
+module client-manager
 
 go 1.21.0
 
