@@ -1,6 +1,7 @@
 package main
 
 import (
+	"client-manager/pkg/domain"
 	"client-manager/pkg/repository"
 	"context"
 	"log"
@@ -17,11 +18,14 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	router := gin.Default()
+	domain.RunRouter()
+	router := domain.MainRouter
+
 	repository.ConnectDatabase()
 	repository.CreateAdmin()
 
 	router.GET("/ping", rootRoute)
+	domain.ClientRouters()
 
 	router.Run("localhost:8080")
 	defer repository.Client.Disconnect(context.Background())
