@@ -2,7 +2,6 @@ package domain
 
 import (
 	"client-manager/pkg/service"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,13 +13,9 @@ func ClientRouters() *gin.Engine {
 
 	r.POST("/clients", service.AddClient)
 
-	r.PATCH("/clients/:id", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "at PATCH /clients/:id"})
-	})
+	r.PATCH("/clients/:id", service.UpdateClient)
 
-	r.DELETE("/clients/:id", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "at DELETE /clients/:id"})
-	})
+	r.DELETE("/clients/:id", service.DeleteClient)
 
 	return r
 }
