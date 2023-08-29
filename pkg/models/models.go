@@ -16,7 +16,7 @@ type Client struct {
 	City            string          `bson:"city"`
 	Country         string          `bson:"country"`
 	PostalCode      string          `bson:"postal_code"`
-	changeHistory   []ChangeHistory `bson:"change_history"`
+	ChangeHistory   []ChangeHistory `bson:"change_history"`
 }
 
 type Admin struct {
