@@ -25,6 +25,7 @@ func AddClient(c *gin.Context) {
 
 	// TODO: avoid adding duplicate clients
 
+	newClient.IsActive = true
 	if err := repository.AddClient(newClient); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to add new client"})
 		log.Println(err)
@@ -85,6 +86,67 @@ func UpdateClient(c *gin.Context) {
 	message := fmt.Sprintf("Matched Items: %d\n Modified Items: %d", updateResult.MatchedCount, updateResult.ModifiedCount)
 
 	c.JSON(http.StatusOK, gin.H{"message": message})
+}
+
+func DeReActivateClient(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID provided"})
+		return
+	}
+
+	// Get the client
+	client, getUserError := repository.GetOneClient(bson.D{{Key: "_id", Value: objectID}}, *options.FindOne())
+	if getUserError != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to update"})
+		log.Println(err)
+		return
+	}
+
+	if client == nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "Client not found"})
+		return
+	}
+
+	// DeReActivate the client
+	updateBody := bson.D{{Key: "is_active", Value: !client.IsActive}}
+	updateResult, err := repository.UpdateClient(id, updateBody)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to update"})
+		log.Println(err)
+		return
+	}
+
+	message := fmt.Sprintf("Matched Items: %d\n Modified Items: %d", updateResult.MatchedCount, updateResult.ModifiedCount)
+	c.JSON(http.StatusOK, gin.H{"message": message})
+}
+
+func GetClient(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID provided"})
+		return
+	}
+
+	// Get the client
+	client, getUserError := repository.GetOneClient(bson.D{{Key: "_id", Value: objectID}}, *options.FindOne())
+	if getUserError != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to update"})
+		log.Println(err)
+		return
+	}
+
+	if client == nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "Client not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, client)
 }
 
 func DeleteClient(c *gin.Context) {

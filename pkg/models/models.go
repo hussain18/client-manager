@@ -16,6 +16,7 @@ type Client struct {
 	City            string          `bson:"city"`
 	Country         string          `bson:"country"`
 	PostalCode      string          `bson:"postal_code"`
+	IsActive        bool            `bson:"is_active"`
 	ChangeHistory   []ChangeHistory `bson:"change_history"`
 }
 

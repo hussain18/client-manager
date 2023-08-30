@@ -55,6 +55,23 @@ func GetAllClients(opts options.FindOptions) (*mongo.Cursor, error) {
 	return clients, nil
 }
 
+// Get one Client
+func GetOneClient(filter primitive.D, opts options.FindOneOptions) (*models.Client, error) {
+	collection := Database.Collection("clients")
+	var result models.Client
+
+	if err := collection.FindOne(context.TODO(), filter, &opts).Decode(&result); err != nil {
+
+		if err == mongo.ErrNoDocuments {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return &result, nil
+}
+
 // Search clients
 // Get change history
 // Delete client

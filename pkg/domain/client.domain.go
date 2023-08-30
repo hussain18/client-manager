@@ -15,6 +15,10 @@ func ClientRouters() *gin.Engine {
 
 	r.PATCH("/clients/:id", service.UpdateClient)
 
+	r.GET("/clients/:id", service.GetClient)
+
+	r.PATCH("/clients/deactivate/:id", service.DeReActivateClient)
+
 	r.DELETE("/clients/:id", service.DeleteClient)
 
 	return r
