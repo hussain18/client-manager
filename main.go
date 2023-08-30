@@ -26,6 +26,7 @@ func main() {
 
 	router.GET("/ping", rootRoute)
 	domain.ClientRouters()
+	domain.AdminRouters()
 
 	router.Run("localhost:8080")
 	defer repository.Client.Disconnect(context.Background())
