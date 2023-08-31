@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/joho/godotenv"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +21,13 @@ func main() {
 
 	domain.RunRouter()
 	router := domain.MainRouter
+
+	// Define CORS options
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowMethods = []string{"GET", "POST", "PATCH", "DELETE"}
+	config.AllowHeaders = []string{"*"}
+	router.Use(cors.New(config))
 
 	repository.ConnectDatabase()
 	repository.CreateAdmin()
